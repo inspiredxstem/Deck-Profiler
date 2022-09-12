@@ -1,16 +1,30 @@
+
 #main_deck {
     background-color: #FFBB5A;
-    display: grid;
 }
 
 #player_deck {
     background-color: #7D50B9;
-    display: grid;
 }
 
-.card {
+#test_deck {
+    background-color: green;
+}
+
+.card-image {
     /* box-sizing: border-box; */
     width: 12em;
-    /* border: solid #5B6DCD 10px; */
-    /* padding: 5px; */
+    padding: 5px;
 }
+
+/* form {
+    float:right
+} */
+
+/* .test {
+    min-height: 6rem;
+    width: 500px;
+    display: grid;
+    border: 3px solid black;
+    gap: 3px;
+} */
