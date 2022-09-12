@@ -10,11 +10,9 @@ const fetchCards = (name) => {
     return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${name}`)
     .then(res => res.json())
     .then(data => {
-        const character = data.data[0];
-        console.log(data);
-        console.log(character.card_images[0].image_url_small);
-        console.log(character.id);
-        createCards(character)
+        data.data.forEach(character => {
+            createCards(character)
+        });
     })
 }
 
@@ -29,7 +27,7 @@ const createCards = (dataObj) => {
 
     card.className = "card";
     card.id = characterId;
-    
+
     imageThumbnailContainer.src = thumbnailImageUrl;
     card.append(imageThumbnailContainer);
 
