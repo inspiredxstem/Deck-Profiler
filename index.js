@@ -1,27 +1,45 @@
-let test = document.getElementById("test")
-test.textContent = "Hello"
+const cardName = document.getElementById("cardname")
+const mainDeck = document.getElementById("main_deck")
+const search = document.getElementById("search")
 
-const fetchCards = () => {
-    return fetch("https://db.ygoprodeck.com/api/v7/cardinfo.php")
+
+
+
+const fetchCards = (name) => {
+    // fuzzy search
+    return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${name}`)
     .then(res => res.json())
+    .then(data => {
+        const character = data.data[0];
+        console.log(data);
+        console.log(character.card_images[0].image_url_small);
+        console.log(character.id);
+        createCards(character)
+    })
 }
 
-
-// const createCards = () => {
-//     return fetch("https://db.ygoprodeck.com/api/v7/cardinfo.php", {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type' : 'application/json',
-//         },
-//         body: JSON.stringify()
-//     })
+const createCards = (dataObj) => {
+    // create DOM objects
+    const card = document.createElement("a");
+    const imageThumbnailContainer = document.createElement("img");
+    // extract necessary data from dataObj
+    const thumbnailImageUrl = dataObj.card_images[0].image_url_small;
+    const characterId = dataObj.id;
 
 
-// .then(data => console.log(data))
-// .then(data => console.log(data.data.map(a => a.card_images[0].image_url_small)))
-// .then(data => console.log(data.data.map(a => a.id)))
-// .then(data => console.log(data.data[0].card_images[0].image_url))
+    card.className = "card";
+    card.id = characterId;
+    
+    imageThumbnailContainer.src = thumbnailImageUrl;
+    card.append(imageThumbnailContainer);
 
-const searchCard = () => {
-
+    mainDeck.append(card);
+    
 }
+
+document.querySelector("#cards").addEventListener("submit", (event) => {
+    event.preventDefault();
+    fetchCards(event.target.cardname.value)    
+})
+
+
