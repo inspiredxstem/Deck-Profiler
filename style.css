@@ -1,4 +1,16 @@
 #main_deck {
-    background-color: red;
+    background-color: #FFBB5A;
     display: grid;
+}
+
+#player_deck {
+    background-color: #7D50B9;
+    display: grid;
+}
+
+.card {
+    /* box-sizing: border-box; */
+    width: 12em;
+    /* border: solid #5B6DCD 10px; */
+    /* padding: 5px; */
 }
