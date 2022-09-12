@@ -1,10 +1,14 @@
-
 #main_deck {
     background-color: #FFBB5A;
+    height: 20em;
+    overflow-y: scroll;
+
 }
 
 #player_deck {
     background-color: #7D50B9;
+    height: 20em;
+    overflow-y: scroll;
 }
 
 #test_deck {
@@ -12,19 +16,30 @@
 }
 
 .card-image {
-    /* box-sizing: border-box; */
-    width: 12em;
-    padding: 5px;
+    width: 10em;
 }
 
-/* form {
-    float:right
-} */
+.card {
+    /* border: 2px solid #555; */
+    /* padding: 1em 2em 4em 4em; */
+  }
 
-/* .test {
+#cards-search {
+    right: 100px
+}
+.test {
     min-height: 6rem;
-    width: 500px;
-    display: grid;
+    width: 60%;
     border: 3px solid black;
-    gap: 3px;
-} */
+}
+
+.card-image {
+    padding: 10px;
+    transition: transform .15s; /* Animation */
+    width: 10em;
+    margin: 0 auto;
+  }
+
+  .card-image:hover {
+    transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }

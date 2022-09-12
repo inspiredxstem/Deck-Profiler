@@ -40,6 +40,9 @@ const createCards = (dataObj) => {
       playerDeckIdArray.push(card.id);
     }
   });
+  card.addEventListener("contextmenu", (event)=>{
+    console.log("Hello")
+  })
   mainDeck.append(card);
 };
 
