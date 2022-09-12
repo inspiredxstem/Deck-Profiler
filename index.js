@@ -33,7 +33,7 @@ const createCards = (dataObj) => {
   // Event Listener to add card to player's Deck
   card.addEventListener("click", () => {
     let playerDeckCards = playerDeck.getElementsByClassName("card");
-    
+
     // If less than 3 of the same card in player deck, append card.
     if (isLessThanThree(playerDeckIdArray, card.id)) {
       playerDeck.append(card.cloneNode(true));
@@ -45,7 +45,7 @@ const createCards = (dataObj) => {
 
 // Function to append card at least 3 times
 const isLessThanThree = (myArray, val) => {
-    return myArray.filter((x) => x === val).length < 3;
+  return myArray.filter((x) => x === val).length < 3;
 };
 
 const clearList = (parent) => {
@@ -62,3 +62,5 @@ document.querySelector("#cards-search").addEventListener("submit", (event) => {
   fetchCards(event.target.cardname.value);
   document.querySelector("#cards-search").reset();
 });
+
+// MVP
