@@ -15,9 +15,7 @@
     background-color: green;
 }
 
-.card-image {
-    width: 10em;
-}
+
 
 .card {
     /* border: 2px solid #555; */
@@ -34,10 +32,10 @@
 }
 
 .card-image {
-    padding: 10px;
+    /* padding: 10px; */
     transition: transform .15s; /* Animation */
     width: 10em;
-    margin: 0 auto;
+    /* margin: 0 auto; */
   }
 
   .card-image:hover {
