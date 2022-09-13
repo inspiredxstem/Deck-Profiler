@@ -1,7 +1,17 @@
+/* .parent {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 0;
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+} */
+
 #main_deck {
   background-color: #ffbb5a;
   height: 20em;
   overflow-y: scroll;
+  grid-area: 2 / 1 / 3 / 4; 
+  
 }
 
 #player_deck {

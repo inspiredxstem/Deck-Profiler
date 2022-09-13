@@ -5,59 +5,92 @@ const search = document.getElementById("search");
 
 let playerDeckIdArray = [];
 
+  fetch(`http://localhost:3000/deck1/`)
+  .then((res) => res.json())
+  .then((data) => {
+    data
+      .forEach((card) => {
+        renderPlayerDeck(card);
+        playerDeckIdArray.push(card.id);
+      });
+      return playerDeckIdArray;
+  });
+
+
+
+
 const fetchCards = (name) => {
   // Fuzzy search
   return fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?fname=${name}`)
     .then((res) => res.json())
     .then((data) => {
-      data.data.forEach((character) => {
-        createCards(character);
+      data.data.forEach((item) => {
+        renderSearchCards(item);
       });
     });
 };
 
-const createCards = (dataObj) => {
-  // Create DOM objects
-  const card = document.createElement("a");
-  const imageContainer = document.createElement("img");
-  // Extract necessary data from dataObj
-  const thumbnailImageUrl = dataObj.card_images[0].image_url_small;
-  const characterId = dataObj.id;
-
-  card.className = "card";
-  card.id = characterId;
-  imageContainer.src = thumbnailImageUrl;
-  imageContainer.className = "card-image";
-  card.append(imageContainer);
-
+// Render Functions
+const renderSearchCards = (card) => {
+  const newCard = createCard(card.id, card.card_images[0].image_url_small);
   // Event Listener to add card to player's Deck
-  card.addEventListener("click", () => {
-    handleCardClick(card);
+  newCard.addEventListener("click", () => {
+    addCardToPlayerDeck(newCard);
   });
 
-
-  // this is to remove the card from the playerdeck, we want to right click on the card
-  // card.addEventListener("contextmenu", (event) => {
-  //   console.log("Hello");
-  // });
-
-  mainDeck.append(card);
+  mainDeck.append(newCard);
 };
 
+const renderPlayerDeck = (card) => {
+  let playerCardCount = card.count;
+  let newCard = createCard(card.id, card.image);
+  playerDeck.append(newCard);
+};
+
+function createCard(id, url) {
+  const card = document.createElement("a");
+  const imageContainer = document.createElement("img");
+
+  card.className = "card";
+  card.id = id;
+  imageContainer.src = url;
+  imageContainer.className = "card-image";
+  card.append(imageContainer);
+  return card;
+}
+
 // Handle Functions
-function handleCardClick(card) {
-  // If less than 3 of the same card in player deck, render card to player's deck. 
-  // Also add card id to array to keep track of cards.
+function addCardToPlayerDeck(card) {
   if (isLessThanThree(playerDeckIdArray, card.id)) {
     playerDeck.append(card.cloneNode(true));
     playerDeckIdArray.push(card.id);
+
+    // note only works if card doesnt exist in deck already
+    postCardToDatabase(card);
   }
 }
+
+const postCardToDatabase = (card) => {
+  fetch("http://localhost:3000/deck1", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: card.id,
+      image: card.querySelector("img").src,
+      count: 1,
+    }),
+  });
+};
 
 // Function to append card at least 3 times
 const isLessThanThree = (myArray, val) => {
   return myArray.filter((x) => x === val).length < 3;
 };
+
+// Function that checks if its in deck
+const existInDeck = () => {};
 
 const clearList = (parent) => {
   let first = parent.firstElementChild;
@@ -73,6 +106,3 @@ document.querySelector("#cards-search").addEventListener("submit", (event) => {
   fetchCards(event.target.cardname.value);
   document.querySelector("#cards-search").reset();
 });
-
-// Todays goals
-// Implement database add / remove
