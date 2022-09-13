@@ -47,8 +47,38 @@ const renderSearchCards = (card) => {
 
 const renderPlayerDeck = (card) => {
   let newCard = createCard(card.id, card.image);
+
   playerDeck.append(newCard);
+
+  addDeleteEvent(newCard, card);
+
 };
+
+
+function addDeleteEvent(newCard, card) {
+  newCard.addEventListener("click", () => {
+    let decrement = card.count - 1;
+    if (card.count > 1) {
+      updatePlayerDeck(selectDeck, card.id, decrement);
+    } else {
+      deletePlayerCard(card.id);
+    }
+    document.getElementById(card.id).remove();
+  });
+}
+
+// oh it should go to addCardToPlayerDeck no?
+// can we write a function to add delete event? i think so lets try it ok
+//the issue is that dom element we just add are added without delete click events. So where we render dom elements, we need to add delete evenets
+
+function deletePlayerCard(cardId) {
+  fetch(`http://localhost:3000/${selectDeck}/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    }
+  });
+}
 
 function createCard(id, url) {
   const card = document.createElement("a");
@@ -75,10 +105,9 @@ function addCardToPlayerDeck(card) {
     } else {
       // note only works if card doesnt exist in deck already
       postCardToDatabase(card);
-    }
-    playerDeck.append(card.cloneNode(true));
+    } 
+    playerDeck.append(card.cloneNode(true))
   }
-
   playerDeckIdArray.push(card.id);
 }
 
