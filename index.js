@@ -32,19 +32,27 @@ const createCards = (dataObj) => {
 
   // Event Listener to add card to player's Deck
   card.addEventListener("click", () => {
-    let playerDeckCards = playerDeck.getElementsByClassName("card");
-
-    // If less than 3 of the same card in player deck, append card.
-    if (isLessThanThree(playerDeckIdArray, card.id)) {
-      playerDeck.append(card.cloneNode(true));
-      playerDeckIdArray.push(card.id);
-    }
+    handleCardClick(card);
   });
-  card.addEventListener("contextmenu", (event)=>{
-    console.log("Hello")
-  })
+
+
+  // this is to remove the card from the playerdeck, we want to right click on the card
+  // card.addEventListener("contextmenu", (event) => {
+  //   console.log("Hello");
+  // });
+
   mainDeck.append(card);
 };
+
+// Handle Functions
+function handleCardClick(card) {
+  // If less than 3 of the same card in player deck, render card to player's deck. 
+  // Also add card id to array to keep track of cards.
+  if (isLessThanThree(playerDeckIdArray, card.id)) {
+    playerDeck.append(card.cloneNode(true));
+    playerDeckIdArray.push(card.id);
+  }
+}
 
 // Function to append card at least 3 times
 const isLessThanThree = (myArray, val) => {
@@ -66,4 +74,5 @@ document.querySelector("#cards-search").addEventListener("submit", (event) => {
   document.querySelector("#cards-search").reset();
 });
 
-// MVP
+// Todays goals
+// Implement database add / remove
