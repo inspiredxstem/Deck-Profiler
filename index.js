@@ -5,19 +5,23 @@ const search = document.getElementById("search");
 
 let playerDeckIdArray = [];
 
-  fetch(`http://localhost:3000/deck1/`)
+// ADD FUNCTIONALITY: on click to dropdown menu, select deck and render cards
+let selectDeck = "deck1";
+
+fetch(`http://localhost:3000/${selectDeck}/`)
   .then((res) => res.json())
   .then((data) => {
-    data
-      .forEach((card) => {
+    data.forEach((card) => {
+      for (let i = 0; i < card.count; i++) {
         renderPlayerDeck(card);
         playerDeckIdArray.push(card.id);
-      });
-      return playerDeckIdArray;
+      }
+    });
+    return playerDeckIdArray;
+  })
+  .then((data) => {
+    console.log("initial render playerDeck", data);
   });
-
-
-
 
 const fetchCards = (name) => {
   // Fuzzy search
@@ -42,7 +46,6 @@ const renderSearchCards = (card) => {
 };
 
 const renderPlayerDeck = (card) => {
-  let playerCardCount = card.count;
   let newCard = createCard(card.id, card.image);
   playerDeck.append(newCard);
 };
@@ -62,16 +65,37 @@ function createCard(id, url) {
 // Handle Functions
 function addCardToPlayerDeck(card) {
   if (isLessThanThree(playerDeckIdArray, card.id)) {
+    if (playerDeckIdArray.includes(card.id)) {
+      fetch(`http://localhost:3000/${selectDeck}/${card.id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          let increment = data.count + 1;
+          updatePlayerDeck(selectDeck, card.id, increment);
+        });
+    } else {
+      // note only works if card doesnt exist in deck already
+      postCardToDatabase(card);
+    }
     playerDeck.append(card.cloneNode(true));
-    playerDeckIdArray.push(card.id);
-
-    // note only works if card doesnt exist in deck already
-    postCardToDatabase(card);
   }
+
+  playerDeckIdArray.push(card.id);
 }
 
+const updatePlayerDeck = (selectDeck, test, newCount) => {
+  return fetch(`http://localhost:3000/${selectDeck}/${test}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      count: newCount,
+    }),
+  }).then((res) => res.json());
+};
+
 const postCardToDatabase = (card) => {
-  fetch("http://localhost:3000/deck1", {
+  fetch(`http://localhost:3000/${selectDeck}/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -88,9 +112,6 @@ const postCardToDatabase = (card) => {
 const isLessThanThree = (myArray, val) => {
   return myArray.filter((x) => x === val).length < 3;
 };
-
-// Function that checks if its in deck
-const existInDeck = () => {};
 
 const clearList = (parent) => {
   let first = parent.firstElementChild;
