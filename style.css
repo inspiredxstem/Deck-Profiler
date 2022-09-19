@@ -1,68 +1,262 @@
-/* .parent {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) 0;
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-} */
+@import url("https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap");
+
+body {
+  background-image: url("assets/Poppy-Hill-DESKTOP.gif");
+  background-size: cover;
+  background-repeat: repeat;
+  background-size: contain;
+}
+
+.test-container {
+  margin-bottom: 10px;
+  display: block;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+}
 
 #main_deck {
-  background-color: #ffbb5a;
-  height: 20em;
-  overflow-y: scroll;
-  grid-area: 2 / 1 / 3 / 4; 
-  
-}
-
-#player_deck {
-  background-color: #7d50b9;
-  height: 20em;
-  overflow-y: scroll;
-}
-
-#test_deck {
-  background-color: green;
+  overflow-y: hidden;
 }
 
 .card {
-  /* border: 2px solid #555; */
-  /* padding: 1em 2em 4em 4em; */
-}
-
-#cards-search {
-  float: right;
-  
-}
-.test {
-  min-height: 6rem;
-  width: 80%;
-  border: 3px solid black;
+  background-color: black;
+  width: 108px;
+  /* border: 3px solid #555; */
+  display: inline-block;
+  position: relative;
+  padding: 5px;
+  margin: 2px;
 }
 
 .card-image {
-  /* padding: 10px; */
-  transition: transform 0.15s; /* Animation */
-  width: 10em;
-  /* margin: 0 auto; */
+  transition: transform 0.15s;
+  width: 6em;
 }
 
 .card-image:hover {
-  transform: scale(
-    1.1
-  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(1.1);
 }
 
 .card-image:active {
-    background-color: #3e8e41;
-    box-shadow: 0 5px #666;
-    transform: translateY(1px);
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(1px);
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 900px;
+  overflow: hidden;
+  min-height: 0px !important;
+}
+
+.searchbar {
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 60px;
+  background-color: #353b48;
+  border-radius: 30px;
+  padding: 10px;
+  padding-right: 15px;
+  background-color: #090446;
+}
+
+.search_input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color: transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input {
+  padding: 0 10px;
+  width: 450px;
+  caret-color: red;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_icon {
+  background: white;
+  color: #e74c3c;
+}
+
+.search_icon {
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+}
+
+.testbox {
+  min-height: 20px !important;
+  text-align: center !important;
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+
+.row {
+  margin-bottom: 10px;
+  margin: 4px;
+  border-radius: 10px;
+}
+
+.dropdown-item {
+  text-align: center;
+}
+
+.navbar-brand {
+  font-family: "Press Start 2P", cursive;
+  color: white;
+}
+
+.card-info-image {
+  transition: transform 0.15s;
+  width: 15em;
+}
+
+.card-info-popup {
+  width: 300px;
+  background-color: black;
+  position: sticky;
+  top: 0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.description-container {
+  font-size: small;
+}
+
+.section-labels {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-top: 5px;
+}
+
+.section-labels .label {
+  font-size: 40px;
+  font-family: "Nabla", cursive;
+  animation: floatY 1.5s ease-in-out infinite alternate;
+  /* text-shadow: 3px 3px 4px #000000; */
+
+  width: 200px;
+  /* border: 2px solid #d1d1d1; */
+  text-align: center;
+}
+
+.section-labels .label:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.section-labels .label:nth-child(3) {
+  animation-delay: 2s;
+}
+
+#character-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#yugi {
+  height: 150px;
+  animation: second_color 2.5s ease-in-out infinite alternate;
+  /* filter: drop-shadow(0 0 10px #ff1177); */
+}
+
+#yugiohCard {
+  width: 60px;
+  height: 80px;
+  margin-top: 3em;
+  animation: first_color 1.5s ease-in-out infinite alternate,
+    bobbing 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes first_color {
+  0% {
+    filter: drop-shadow(0 0 8px #ff1177);
   }
+  100% {
+    filter: drop-shadow(0 0 20px #ff1177);
+  }
+}
 
+@keyframes second_color {
+  0% {
+    filter: drop-shadow(0 0 8px #f5c55b);
+  }
+  100% {
+    filter: drop-shadow(0 0 20px #f5c55b);
+  }
+}
 
+@keyframes bobbing {
+  0% {
+    transform: rotate(-0.01turn);
+  }
+  50% {
+    transform: rotate(0.01turn);
+  }
+  100% {
+    transform: rotate(-0.01turn);
+  }
+}
 
+@keyframes floatY {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 
+.deck {
+  margin: 4px;
+  box-shadow: 5px 5px 5px black;
+}
 
+.nav-link {
+  font-family: "Press Start 2P", cursive;
+  font-size: 10px;
+  color: white;
+}
 
+.dropdown-item {
+  font-family: "Press Start 2P", cursive;
+  font-size: 7px;
+  color: black;
+}
 
+#search-deck {
+  background-color: #67b2e4;
+  border: 0px;
+  border-radius: 10px;
+}
 
-/*
+#player-deck {
+  background-color: #c292de;
+  border: 0px;
+  border-radius: 10px;
+}
+
+#card-info {
+  background-color: #95a3e0;
+  border: 0px;
+  border-radius: 10px;
+}
